@@ -4,10 +4,8 @@ info:
 paths:
   /ludo:
     get:
-      summary: Lista
       description: Lista av fia spel   
     post:
-      summary: lista
       description: Skåpa ett nytt spel
   /ludo/{gameId}:
     get:
