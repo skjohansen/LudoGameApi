@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LudoGameEngine;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,12 @@ namespace LudoWebApi.Controllers
     [ApiController]
     public class LudoPlayersController : ControllerBase
     {
+        private ILudoGameContainer ludoGames;
+
+        public LudoPlayersController(ILudoGameContainer lgc)
+        {
+            ludoGames = lgc;
+        }
 
         // GET: api/ludo/3/players
         /// <summary>

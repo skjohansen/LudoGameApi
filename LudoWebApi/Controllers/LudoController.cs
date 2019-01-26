@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LudoGameEngine;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,16 +12,25 @@ namespace LudoWebApi.Controllers
     [ApiController]
     public class LudoController : ControllerBase
     {
-        
+        private ILudoGameContainer ludoGames;
+        private IGameIdGenerator gameIdGenerator;
+
+
+        public LudoController(ILudoGameContainer lgc, IGameIdGenerator gid)
+        {
+            ludoGames = lgc;
+            gameIdGenerator = gid;
+        }
+
         // GET: api/Ludo
         /// <summary>
         /// Lista av fia spel 
         /// </summary>
         /// <returns>Lista av fia spel </returns>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<int> Get()
         {
-            return new string[] { "value1", "value2" };
+            return ludoGames.GetIdOfAllGames().ToArray();
         }
 
 
@@ -30,8 +40,11 @@ namespace LudoWebApi.Controllers
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public int Post()
         {
+            var randomId = gameIdGenerator.GenerateGameId();
+            ludoGames.GetGame(randomId);
+            return randomId;
         }
 
 
