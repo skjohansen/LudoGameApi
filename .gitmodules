@@ -1,0 +1,3 @@
+[submodule "LudoGameEngine"]
+	path = LudoGameEngine
+	url = https://github.com/skjohansen/LudoGameEngine
