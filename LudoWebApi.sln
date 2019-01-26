@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LudoWebApi", "LudoWebApi\LudoWebApi.csproj", "{5EF04504-7CA2-4F27-9401-6449B3BDFCA7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LudoGameEngine", "LudoGameEngine\LudoGameEngine\LudoGameEngine.csproj", "{068ED338-4C26-4B39-87CC-EAD3C44921C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5EF04504-7CA2-4F27-9401-6449B3BDFCA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EF04504-7CA2-4F27-9401-6449B3BDFCA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EF04504-7CA2-4F27-9401-6449B3BDFCA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{068ED338-4C26-4B39-87CC-EAD3C44921C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{068ED338-4C26-4B39-87CC-EAD3C44921C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{068ED338-4C26-4B39-87CC-EAD3C44921C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{068ED338-4C26-4B39-87CC-EAD3C44921C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
