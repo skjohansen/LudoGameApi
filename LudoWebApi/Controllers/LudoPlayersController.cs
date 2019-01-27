@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LudoGameEngine;
+using LudoWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,9 +26,14 @@ namespace LudoWebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{gameId}/players")]
-        public IEnumerable<string> Get(int gameId)
+        public IEnumerable<LudoPlayer> Get(int gameId)
         {
-            return new string[] { "value1", "value2" };
+            return ludoGames[gameId].GetPlayers().Select(p => 
+                new LudoPlayer() {
+                    Color = p.PlayerColor.ToString(),
+                    Id = p.PlayerId,
+                    Name = p.Name }
+                );
         }
 
 
@@ -37,10 +43,22 @@ namespace LudoWebApi.Controllers
         /// </summary>
         /// <param name="value"></param>
         [HttpPost("{gameId}/players")]
-        public void Post(int gameId, [FromBody] string value)
+        public void Post(int gameId, [FromBody] LudoPlayer player)
         {
+            PlayerColor playerColor = ParseColor(player.Color);
+            ludoGames[gameId].AddPlayer(player.Name, playerColor);
         }
 
+        private PlayerColor ParseColor(string color) {
+            switch (color.Trim().ToLower())
+            {
+                case "red": return PlayerColor.Red;
+                case "green": return PlayerColor.Green;
+                case "blue": return PlayerColor.Blue;
+                case "yellow": return PlayerColor.Yellow;
+            }
+            throw new Exception($"Color {color} is unknown, the suported colors are: red, green, blue and yellow");
+        }
 
         // GET: api/ludo/3/players/4
         /// <summary>
@@ -49,30 +67,28 @@ namespace LudoWebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{gameId}/players/{playerId}")]
-        public string Get(int gameId, int playerId)
+        public LudoPlayer Get(int gameId, int playerId)
         {
-            return "value";
+            var player = ludoGames[gameId].GetPlayers().First(p =>  p.PlayerId == playerId);
+            return new LudoPlayer()
+            {
+                Color = player.PlayerColor.ToString(),
+                Id = player.PlayerId,
+                Name = player.Name
+            };
         }
 
         // PUT: api/ludo/3/players/4
         /// <summary>
-        /// Ändra namn eller färg på speleren
+        /// Ändra namn på speleren
         /// </summary>
         /// <param name="id"></param>
         /// <param name="value"></param>
         [HttpPut("{gameId}/players/{playerId}")]
-        public void Put(int gameId, int playerId, [FromBody] string value)
+        public void Put(int gameId, int playerId, [FromBody] LudoPlayer value)
         {
-        }
-
-        // DELETE: api/ludo/3/players/4
-        /// <summary>
-        /// Ta bort speleren
-        /// </summary>
-        /// <param name="id"></param>
-        [HttpDelete("{gameId}/players/{playerId}")]
-        public void Delete(int gameId, int playerId)
-        {
+            var player = ludoGames[gameId].GetPlayers().First(p => p.PlayerId == playerId);
+            player.Name = value.Name;
         }
     }
 }

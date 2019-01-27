@@ -14,6 +14,11 @@ paths:
       description: Ändra placering på en pjäs
     delete:
       description: Ta bort ett spel
+  /ludo/{gameId}/state:
+    get:
+      description: Get the state of the current game
+    put:
+      description: If possible change the state to started
   /ludo/{gameId}/players:
     get:
       description: List med alla spelera i spelet
@@ -23,6 +28,4 @@ paths:
     get:
       description: Detajeret information om speleren
     put:
-      description: Ändra namn eller färg på speleren
-    delete:
-      description: Ta bort speleren
+      description: Ändra namn på speleren

@@ -6,26 +6,28 @@ namespace LudoWebApi
 {
     public class LudoGameContainer : ILudoGameContainer
     {
-        private Dictionary<int, LudoGame> ludoGames;
+        private Dictionary<int, ILudoGame> ludoGames;
         private IDiece diece;
 
         public LudoGameContainer(IDiece di)
         {
-            ludoGames = new Dictionary<int, LudoGame>();
+            ludoGames = new Dictionary<int, ILudoGame>();
             diece = di;
         }
 
-        public LudoGame GetGame(int id)
-        {
-            if (!ludoGames.ContainsKey(id))
+        public ILudoGame this[int gameId] {
+            get
             {
-                ludoGames.Add(id, new LudoGame(diece));
-            }
+                if (!ludoGames.ContainsKey(gameId))
+                {
+                    ludoGames.Add(gameId, new LudoGame(diece));
+                }
 
-            return ludoGames[id];
+                return ludoGames[gameId];
+            }
         }
 
-        public List<int> GetIdOfAllGames()
+        public List<int> GetIdsOfAllGames()
         {
             return ludoGames.Select(d => d.Key).ToList();
         }

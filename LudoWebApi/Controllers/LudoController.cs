@@ -30,7 +30,7 @@ namespace LudoWebApi.Controllers
         [HttpGet]
         public IEnumerable<int> Get()
         {
-            return ludoGames.GetIdOfAllGames().ToArray();
+            return ludoGames.GetIdsOfAllGames().ToArray();
         }
 
 

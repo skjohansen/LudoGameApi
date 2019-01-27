@@ -5,8 +5,12 @@ namespace LudoWebApi
 {
     public interface ILudoGameContainer
     {
-        LudoGame GetGame(int id);
-        List<int> GetIdOfAllGames();
+        ILudoGame this[int gameId]
+        {
+            get;
+        }
+
+        List<int> GetIdsOfAllGames();
         void DeleteGame(int id);
     }
 }
