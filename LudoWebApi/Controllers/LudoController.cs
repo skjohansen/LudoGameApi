@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using LudoGameEngine;
-using Microsoft.AspNetCore.Http;
+using LudoWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LudoWebApi.Controllers
@@ -43,7 +40,7 @@ namespace LudoWebApi.Controllers
         public int Post()
         {
             var randomId = gameIdGenerator.GenerateGameId();
-            ludoGames.GetGame(randomId);
+            ludoGames.CreateGame(randomId);
             return randomId;
         }
 
@@ -55,9 +52,15 @@ namespace LudoWebApi.Controllers
         /// <param name="gameId"></param>
         /// <returns>Detaljeret information om spelet, som vart alla pjäser finns</returns>
         [HttpGet("{gameId}")]
-        public string GetGame(int gameId)
+        public GameModel GetGame(int gameId)
         {
-            return "value";
+            var game = ludoGames[gameId];
+            return new GameModel() {
+                GameId = gameId,
+                CurrentPlayerId = game.GetCurrentPlayer().PlayerId,
+                NumberOfPlayers = game.GetPlayers().Count(),
+                State = game.GetGameState().ToString()
+            };
         }
 
         // PUT: api/Ludo/5
@@ -67,8 +70,10 @@ namespace LudoWebApi.Controllers
         /// <param name="id"></param>
         /// <param name="value"></param>
         [HttpPut("{gameId}")]
-        public void PutGame(int gameId, [FromBody] string value)
+        public void PutGame(int gameId, [FromBody] MovePiece value)
         {
+            var player = ludoGames[gameId].GetPlayers().First(p => p.PlayerId == value.PlayerId);
+            ludoGames[gameId].MovePiece(player, value.PieceId, value.NumberOfFields);
         }
 
         // DELETE: api/Ludo/5
@@ -79,6 +84,7 @@ namespace LudoWebApi.Controllers
         [HttpDelete("{gameId}")]
         public void DeleteGame(int gameId)
         {
+            ludoGames.DeleteGame(gameId);
         }
     }
 }

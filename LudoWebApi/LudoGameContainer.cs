@@ -15,16 +15,22 @@ namespace LudoWebApi
             diece = di;
         }
 
-        public ILudoGame this[int gameId] {
+        public ILudoGame this[int gameId]
+        {
             get
             {
                 if (!ludoGames.ContainsKey(gameId))
                 {
-                    ludoGames.Add(gameId, new LudoGame(diece));
+                    CreateGame(gameId);
                 }
-
                 return ludoGames[gameId];
             }
+        }
+
+        public void CreateGame(int gameId)
+        {
+            ludoGames.Add(gameId, new LudoGame(diece));
+
         }
 
         public List<int> GetIdsOfAllGames()

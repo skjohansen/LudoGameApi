@@ -12,5 +12,6 @@ namespace LudoWebApi
 
         List<int> GetIdsOfAllGames();
         void DeleteGame(int id);
+        void CreateGame(int gameId);
     }
 }
