@@ -27,7 +27,8 @@ namespace LudoWebApi.Controllers
         [HttpGet("{gameId}/winner")]
         public string Get(int gameId)
         {
-            return ludoGames[gameId].GetWinner().Name;
+            var winner = ludoGames[gameId].GetWinner();
+            return winner == null ? "N/A" : winner.Name;
         }
     }
 }

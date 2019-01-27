@@ -43,10 +43,18 @@ namespace LudoWebApi.Controllers
         /// </summary>
         /// <param name="value"></param>
         [HttpPost("{gameId}/players")]
-        public void Post(int gameId, [FromBody] LudoPlayer player)
+        public ActionResult Post(int gameId, [FromBody] LudoPlayer player)
         {
             PlayerColor playerColor = ParseColor(player.Color);
-            ludoGames[gameId].AddPlayer(player.Name, playerColor);
+            try
+            {
+                ludoGames[gameId].AddPlayer(player.Name, playerColor);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest("Unable to add player");
+            }
         }
 
         private PlayerColor ParseColor(string color) {
