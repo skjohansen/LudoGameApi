@@ -29,3 +29,6 @@ paths:
       description: Detajeret information om speleren
     put:
       description: Ändra namn på speleren
+  /ludo/{gameId}/winner:
+    get:
+      description: Name of the winner (If the game is over) 
