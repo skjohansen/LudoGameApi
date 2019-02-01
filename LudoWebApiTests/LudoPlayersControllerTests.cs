@@ -22,7 +22,7 @@ namespace LudoWebApiTests
             var sut = new LudoPlayersController(gameContainerMock);
 
             // Act
-            var result = sut.Post(0,new LudoPlayer() { Name = "player1", Color = "red"});
+            var result = sut.Post(0,new LudoPlayer() { Name = "player1", Color = playerColor});
 
             // Assert
             Assert.IsType<OkResult>(result);
