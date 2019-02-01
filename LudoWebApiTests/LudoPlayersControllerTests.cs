@@ -9,8 +9,12 @@ namespace LudoWebApiTests
 {
     public class LudoPlayersControllerTests
     {
-        [Fact]
-        public void Post_AddARedPlayerToAnEmptyGame_HttpOkResult()
+        [Theory]
+        [InlineData("red")]
+        [InlineData("green")]
+        [InlineData("yellow")]
+        [InlineData("blue")]
+        public void Post_AddPlayerOfLegalColorToAnEmptyGame_HttpOkResult(string playerColor)
         {
             // Arrange
             var gameContainerMock = new GameContainerMock();
