@@ -3,6 +3,7 @@ using System.Linq;
 using LudoGameEngine;
 using LudoWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace LudoWebApi.Controllers
 {
@@ -12,11 +13,13 @@ namespace LudoWebApi.Controllers
     {
         private ILudoGameContainer ludoGames;
         private IGameIdGenerator gameIdGenerator;
+        private readonly ILogger _logger;  
 
 
         //public LudoController(ILudoGameContainer lgc, IGameIdGenerator gid)
-        public LudoController()
+        public LudoController(ILogger<LudoController> l)
         {
+            _logger = l;
             ludoGames = new LudoGameContainer(new Diece());
             gameIdGenerator = new GameIdGenerator();
         }
@@ -29,7 +32,10 @@ namespace LudoWebApi.Controllers
         [HttpGet]
         public IEnumerable<int> Get()
         {
-            return ludoGames.GetIdsOfAllGames().ToArray();
+            _logger.LogInformation("List of all games");
+            var games = ludoGames.GetIdsOfAllGames().ToArray();
+            _logger.LogInformation("List of games contains {NumberOfGames}", games.Length);
+            return games;
         }
 
 
@@ -56,6 +62,7 @@ namespace LudoWebApi.Controllers
         [HttpGet("{gameId}")]
         public GameModel GetGame(int gameId)
         {
+
             var game = ludoGames[gameId];
             int numberOfPlayers = game.GetPlayers().Count();
             var currentPlayer = game.GetCurrentPlayer();

@@ -52,7 +52,8 @@ namespace LudoWebApiTests
             var sut = new LudoPlayersController(gameContainerMock);
 
             // Assert
-            Assert.Throws<Exception>(() => sut.Post(0, new LudoPlayer() { Name = "player1", Color = "orange" }));
+            Assert.Throws<Exception>(() => 
+                sut.Post(0, new LudoPlayer() { Name = "player1", Color = "orange" }));
         }
     }
 }
